@@ -17,7 +17,9 @@ import {
   sortTheThings,
 } from "./utils";
 
-// GitHub Issues/PRs messages have a max size limit on the
+// GitHub Issues/PRs messages have a max size limit on th
+
+
 // message body payload.
 // `body is too long (maximum is 65536 characters)`.
 // To avoid that, we ensure to cap the message to 60k chars.
@@ -262,6 +264,7 @@ type VersionOptions = {
   hasPublishScript?: boolean;
   prBodyMaxCharacters?: number;
   branch?: string;
+  branchName?: string;
 };
 
 type RunVersionResult = {
@@ -278,8 +281,9 @@ export async function runVersion({
   hasPublishScript = false,
   prBodyMaxCharacters = MAX_CHARACTERS_PER_MESSAGE,
   branch = github.context.ref.replace("refs/heads/", ""),
+  branchName
 }: VersionOptions): Promise<RunVersionResult> {
-  let versionBranch = `changeset-release/${branch}`;
+  let versionBranch = branchName ?? `changeset-release/${branch}`;
 
   let { preState } = await readChangesetState(cwd);
 
